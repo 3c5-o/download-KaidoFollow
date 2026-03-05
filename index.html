@@ -10,36 +10,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- متغيرات الألوان الفخمة --- */
         :root {
-            --bg-main: #09090b; 
-            --bg-card: rgba(24, 24, 27, 0.95); 
-            --bg-input: #18181b;
-            --border: rgba(63, 63, 70, 0.6);
-            --text-main: #f8fafc;
-            --text-sec: #a1a1aa;
-            --primary: #8b5cf6;
-            --accent: #d946ef;
+            --bg-main: #09090b; --bg-card: rgba(24, 24, 27, 0.95); --bg-input: #18181b;
+            --border: rgba(63, 63, 70, 0.6); --text-main: #f8fafc; --text-sec: #a1a1aa;
+            --primary: #8b5cf6; --accent: #d946ef;
             --gradient-pro: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
             --glow: rgba(139, 92, 246, 0.4);
-            --success: #10b981; 
-            --danger: #f43f5e; 
-            --warning: #f59e0b; 
-            --info: #3b82f6;
+            --success: #10b981; --danger: #f43f5e; --warning: #f59e0b; --info: #3b82f6;
             --sidebar-width: 280px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; outline: none; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg-main); color: var(--text-main); overflow-x: hidden; min-height: 100vh; display: flex; }
         input, button, select, textarea { border: none; background: none; color: inherit; }
-        
-        body::before {
-            content: ''; position: fixed; top: -20%; right: -10%; width: 60vw; height: 60vw;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 60%);
-            z-index: -1; filter: blur(60px); pointer-events: none;
-        }
+        body::before { content: ''; position: fixed; top: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 60%); z-index: -1; filter: blur(60px); pointer-events: none; }
 
-        /* --- أدوات الواجهة --- */
         .card { background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
         .btn { padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
         .btn:active { transform: scale(0.95); }
@@ -52,12 +37,10 @@
         .input-box { width: 100%; padding: 12px 15px; background: var(--bg-input); border: 1px solid var(--border); border-radius: 12px; font-size: 0.95rem; transition: 0.3s; color: var(--text-main); }
         .input-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15); }
         
-        /* الجداول */
         .table-wrap { overflow-x: auto; border-radius: 16px; border: 1px solid var(--border); background: var(--bg-input); -webkit-overflow-scrolling: touch; }
         table { width: 100%; border-collapse: collapse; text-align: right; min-width: 700px; }
         th { background: rgba(0,0,0,0.3); padding: 15px; color: var(--text-sec); font-size: 0.85rem; font-weight: 800; border-bottom: 1px solid var(--border); white-space: nowrap; }
         td { padding: 15px; border-bottom: 1px solid var(--border); font-size: 0.95rem; color: var(--text-main); vertical-align: middle; }
-        tr:last-child td { border-bottom: none; }
         tr:hover td { background: rgba(255,255,255,0.02); }
 
         .badge { padding: 5px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; white-space: nowrap; }
@@ -66,68 +49,63 @@
         .bg-fail { background: rgba(244, 63, 94, 0.15); color: var(--danger); }
         .bg-info { background: rgba(59, 130, 246, 0.15); color: var(--info); }
 
-        /* --- تخطيط اللوحة --- */
+        /* أزرار التبديل (Toggle Switch) */
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border); transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--success); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
         #admin-auth { position: fixed; inset: 0; background: var(--bg-main); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px; }
         
-        .sidebar {
-            width: var(--sidebar-width); background: rgba(15, 15, 18, 0.98); backdrop-filter: blur(20px);
-            border-left: 1px solid var(--border); height: 100vh; position: fixed; right: 0; top: 0;
-            display: flex; flex-direction: column; padding: 25px 20px; z-index: 1000; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .sidebar { width: var(--sidebar-width); background: rgba(15, 15, 18, 0.98); backdrop-filter: blur(20px); border-left: 1px solid var(--border); height: 100vh; position: fixed; right: 0; top: 0; display: flex; flex-direction: column; padding: 25px 20px; z-index: 1000; transition: 0.3s; }
         .sidebar-brand { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
         .sidebar-brand img { width: 45px; border-radius: 12px; box-shadow: 0 0 15px var(--glow); }
-        .sidebar-brand h2 { font-weight: 900; font-size: 1.3rem; letter-spacing: 1px; }
         
         .nav-menu { display: flex; flex-direction: column; gap: 6px; flex: 1; overflow-y: auto; padding-left: 5px; }
         .nav-menu::-webkit-scrollbar { width: 4px; }
         .nav-menu::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
         .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; color: var(--text-sec); font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 0.9rem; }
-        .nav-link i { font-size: 1.1rem; width: 20px; text-align: center; transition: 0.3s; }
         .nav-link:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
         .nav-link.active { background: var(--gradient-pro); color: white; box-shadow: 0 5px 15px var(--glow); }
 
-        .main-content { margin-right: var(--sidebar-width); flex: 1; min-height: 100vh; padding: 30px; display: none; width: calc(100% - var(--sidebar-width)); transition: margin 0.3s; }
+        .main-content { margin-right: var(--sidebar-width); flex: 1; min-height: 100vh; padding: 30px; display: none; width: calc(100% - var(--sidebar-width)); transition: 0.3s; }
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; background: var(--bg-card); padding: 15px 25px; border-radius: 16px; border: 1px solid var(--border); }
         .page-title { font-size: 1.4rem; font-weight: 900; color: var(--text-main); display: flex; align-items: center; gap: 15px; }
-        #mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); background: rgba(139, 92, 246, 0.1); padding: 10px; border-radius: 10px; }
+        #mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
 
         .section { display: none; animation: fadeIn 0.4s ease; }
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* الإحصائيات */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 30px; }
         .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 15px; position: relative; overflow: hidden; }
-        .stat-card::after { content:''; position:absolute; top:0; left:0; width:4px; height:100%; background:var(--primary); }
         .stat-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(139, 92, 246, 0.1); color: var(--primary); }
         .stat-info span { color: var(--text-sec); font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 3px; }
         .stat-info h3 { font-size: 1.5rem; font-weight: 900; font-family: monospace; }
 
-        /* النوافذ المنبثقة */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.open { display: flex; animation: fadeIn 0.3s ease; }
         .modal-content { background: var(--bg-main); border: 1px solid var(--border); border-radius: 20px; width: 100%; max-width: 500px; padding: 25px; position: relative; max-height: 90vh; overflow-y: auto; }
         .modal-close { position: absolute; top: 20px; left: 20px; font-size: 1.2rem; color: var(--text-sec); cursor: pointer; transition: 0.2s; }
-        .modal-close:hover { color: var(--danger); }
-        .modal-title { font-size: 1.2rem; font-weight: 900; margin-bottom: 20px; color: var(--primary); border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-
-        /* الإشعارات */
-        #custom-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--bg-card); border: 1px solid var(--border); border-radius: 50px; padding: 12px 25px; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 9999; opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); width: max-content; max-width: 90vw; }
+        
+        #custom-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--bg-card); border: 1px solid var(--border); border-radius: 50px; padding: 12px 25px; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 9999; opacity: 0; transition: all 0.4s; }
         #custom-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         
         #loader { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 100000; display: none; justify-content: center; align-items: center; }
         .spinner { width: 45px; height: 45px; border: 4px solid var(--bg-input); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
 
-        /* الموبايل */
+        .tabs { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .tab-btn { background: none; border: none; color: var(--text-sec); font-weight: bold; padding: 8px 15px; cursor: pointer; border-radius: 8px; transition: 0.2s; }
+        .tab-btn.active { background: rgba(139, 92, 246, 0.1); color: var(--primary); }
+
         @media (max-width: 900px) {
             .sidebar { transform: translateX(100%); }
             .sidebar.open { transform: translateX(0); box-shadow: -10px 0 40px rgba(0,0,0,0.8); }
             .main-content { margin-right: 0; width: 100%; padding: 15px; }
             #mobile-toggle { display: block; }
             .stats-grid { grid-template-columns: 1fr; }
-            .top-header { padding: 15px; margin-bottom: 20px; }
-            .page-title { font-size: 1.1rem; }
-            .card { padding: 15px; }
         }
         #sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; display: none; backdrop-filter: blur(3px); }
         #sidebar-overlay.show { display: block; animation: fadeIn 0.3s ease; }
@@ -137,6 +115,18 @@
 
     <div id="loader"><div class="spinner"></div></div>
     <div id="custom-toast"><i id="toast-icon" class="fas fa-info-circle toast-icon"></i><span id="toast-msg" class="toast-msg"></span></div>
+
+    <div id="modal-confirm" class="modal-overlay" style="z-index: 5000;">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div id="confirm-icon" style="font-size: 3.5rem; margin-bottom: 15px; color: var(--danger);"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3 id="confirm-title" style="margin-bottom: 10px; font-weight: 900;">هل أنت متأكد؟</h3>
+            <p id="confirm-msg" style="color: var(--text-sec); margin-bottom: 25px; font-size: 0.95rem;"></p>
+            <div style="display: flex; gap: 10px;">
+                <button id="btn-confirm-yes" class="btn btn-danger" style="flex: 1;">تأكيد</button>
+                <button onclick="window.closeModal('modal-confirm')" class="btn btn-outline" style="flex: 1;">إلغاء</button>
+            </div>
+        </div>
+    </div>
 
     <div id="admin-auth">
         <div class="card" style="width: 100%; max-width: 400px; text-align: center; padding: 40px 30px;">
@@ -152,80 +142,68 @@
     <div id="sidebar-overlay" onclick="window.toggleMobileMenu()"></div>
 
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-brand">
-            <img src="https://e.top4top.io/p_3675vatut1.jpg" alt="Logo">
-            <h2>الإدارة العامة</h2>
-        </div>
+        <div class="sidebar-brand"><img src="https://e.top4top.io/p_3675vatut1.jpg"><h2>الإدارة العامة</h2></div>
         <div class="nav-menu">
             <div class="nav-link active" onclick="window.nav('dash')"><i class="fas fa-chart-pie"></i> نظرة عامة</div>
-            <div class="nav-link" onclick="window.nav('providers')"><i class="fas fa-server"></i> مزودي الخدمات (API)</div>
+            <div class="nav-link" onclick="window.nav('providers')"><i class="fas fa-server"></i> مزودي الخدمات</div>
             <div class="nav-link" onclick="window.nav('users')"><i class="fas fa-users-cog"></i> المستخدمين والحظر</div>
-            <div class="nav-link" onclick="window.nav('services')"><i class="fas fa-cloud-download-alt"></i> الأقسام والاستيراد</div>
+            <div class="nav-link" onclick="window.nav('services')"><i class="fas fa-layer-group"></i> الأقسام والخدمات</div>
             <div class="nav-link" onclick="window.nav('orders')"><i class="fas fa-box-open"></i> الطلبات والاسترجاع</div>
             <div class="nav-link" onclick="window.nav('coupons')"><i class="fas fa-ticket-alt"></i> الكوبونات الذكية</div>
             <div class="nav-link" onclick="window.nav('support')"><i class="fas fa-headset"></i> الدعم والتذاكر</div>
-            <div class="nav-link" onclick="window.nav('noti')"><i class="fas fa-bell"></i> الإشعارات والمشاهدات</div>
+            <div class="nav-link" onclick="window.nav('noti')"><i class="fas fa-bell"></i> الإشعارات</div>
         </div>
         <button onclick="window.adminLogout()" class="btn btn-danger" style="margin-top: 20px;"><i class="fas fa-power-off"></i> تسجيل الخروج</button>
     </div>
 
     <div class="main-content" id="main-content">
-        
         <div class="top-header">
             <div class="page-title"><i class="fas fa-bars" id="mobile-toggle" onclick="window.toggleMobileMenu()"></i><span id="page-title-text">نظرة عامة</span></div>
-            <div style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 8px 15px; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.3); font-weight: bold; font-size: 0.85rem;"><i class="fas fa-check-circle"></i> متصل</div>
+            <div style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 8px 15px; border-radius: 12px; font-weight: bold; font-size: 0.85rem;"><i class="fas fa-check-circle"></i> متصل</div>
         </div>
 
         <div id="sec-dash" class="section active">
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><span>المستخدمين</span><h3 id="count-users">0</h3></div></div>
-                <div class="stat-card"><div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);"><i class="fas fa-shopping-cart"></i></div><div class="stat-info"><span>الطلبات</span><h3 id="count-orders">0</h3></div></div>
-                <div class="stat-card"><div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: var(--info);"><i class="fas fa-coins"></i></div><div class="stat-info"><span>إجمالي المبيعات</span><h3 id="count-sales">0$</h3></div></div>
-                <div class="stat-card"><div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);"><i class="fas fa-chart-line"></i></div><div class="stat-info"><span>صافي الأرباح</span><h3 id="count-profit">0$</h3></div></div>
+                <div class="stat-card"><div class="stat-icon" style="color: var(--success);"><i class="fas fa-shopping-cart"></i></div><div class="stat-info"><span>الطلبات</span><h3 id="count-orders">0</h3></div></div>
+                <div class="stat-card"><div class="stat-icon" style="color: var(--info);"><i class="fas fa-coins"></i></div><div class="stat-info"><span>المبيعات</span><h3 id="count-sales">0$</h3></div></div>
+                <div class="stat-card"><div class="stat-icon" style="color: var(--warning);"><i class="fas fa-chart-line"></i></div><div class="stat-info"><span>الأرباح</span><h3 id="count-profit">0$</h3></div></div>
             </div>
         </div>
 
         <div id="sec-providers" class="section">
             <button onclick="window.openModal('modal-provider')" class="btn btn-pro" style="margin-bottom: 20px;"><i class="fas fa-plus"></i> إضافة مزود جديد</button>
             <div class="card">
-                <h3 style="color: var(--primary); margin-bottom: 15px;"><i class="fas fa-server"></i> قائمة المزودين (API)</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead><tr><th>اسم المزود</th><th>الرابط (URL)</th><th>الرصيد في المزود</th><th>إجراءات</th></tr></thead>
-                        <tbody id="list-providers"></tbody>
-                    </table>
-                </div>
+                <h3 style="color: var(--primary); margin-bottom: 15px;"><i class="fas fa-server"></i> قائمة المزودين</h3>
+                <div class="table-wrap"><table><thead><tr><th>اسم المزود</th><th>الرابط (URL)</th><th>الرصيد في المزود</th><th>الطلبات المرسلة</th><th>إجراءات</th></tr></thead><tbody id="list-providers"></tbody></table></div>
             </div>
         </div>
 
         <div id="sec-users" class="section">
             <div class="card">
-                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h3 style="color: var(--primary);"><i class="fas fa-users"></i> إدارة المستخدمين</h3>
-                    <div class="input-group" style="width: 100%; max-width: 300px; margin: 0;"><input type="text" id="search-user" class="input-box" placeholder="ابحث..." onkeyup="window.filterTable('search-user', 'table-users')"></div>
+                    <input type="text" id="search-user" class="input-box" style="max-width: 250px;" placeholder="ابحث..." onkeyup="window.filterTable('search-user', 'table-users')">
                 </div>
-                <div class="table-wrap">
-                    <table id="table-users">
-                        <thead><tr><th>الاسم واليوزر</th><th>الرصيد الحالي</th><th>الصرف</th><th>الحالة</th><th>تعديل الرصيد</th><th>الحظر</th></tr></thead>
-                        <tbody id="list-users"></tbody>
-                    </table>
-                </div>
+                <div class="table-wrap"><table id="table-users"><thead><tr><th>الاسم واليوزر</th><th>الرصيد</th><th>الصرف</th><th>الحالة</th><th>تعديل الرصيد</th><th>الحظر</th></tr></thead><tbody id="list-users"></tbody></table></div>
             </div>
         </div>
 
         <div id="sec-services" class="section">
             <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-                <button onclick="window.openModal('modal-cat')" class="btn btn-pro"><i class="fas fa-folder-plus"></i> قسم جديد</button>
-                <button onclick="window.openModal('modal-import')" class="btn btn-outline" style="border-color: var(--success); color: var(--success);"><i class="fas fa-cloud-download-alt"></i> استيراد ذكي من مزود</button>
-                <button onclick="window.openModal('modal-srv')" class="btn btn-outline"><i class="fas fa-plus-square"></i> إضافة خدمة يدوياً</button>
+                <button onclick="window.openCatModal()" class="btn btn-pro"><i class="fas fa-folder-plus"></i> قسم جديد</button>
+                <button onclick="window.openAdvancedImport()" class="btn btn-outline" style="border-color: var(--success); color: var(--success);"><i class="fas fa-store"></i> متجر الاستيراد الذكي</button>
+                <button onclick="window.openSrvModal()" class="btn btn-outline"><i class="fas fa-plus-square"></i> إضافة خدمة يدوياً</button>
             </div>
             <div class="card">
                 <h3 style="color: var(--primary); margin-bottom: 15px;"><i class="fas fa-layer-group"></i> الأقسام</h3>
-                <div class="table-wrap" style="margin-bottom: 30px;"><table><thead><tr><th>القسم</th><th>الحالة</th><th>حذف</th></tr></thead><tbody id="list-cats"></tbody></table></div>
-                <h3 style="color: var(--primary); margin-bottom: 15px;"><i class="fas fa-list"></i> الخدمات المتوفرة</h3>
-                <div class="table-wrap">
-                    <table id="table-services"><thead><tr><th>التسلسل</th><th>المزود</th><th>ID المزود</th><th>الخدمة</th><th>السعر للعميل</th><th>القسم</th><th>حذف</th></tr></thead><tbody id="list-srvs"></tbody></table>
+                <div class="table-wrap" style="margin-bottom: 30px;"><table><thead><tr><th>الترتيب</th><th>الصورة</th><th>القسم</th><th>إخفاء/إظهار</th><th>إجراءات</th></tr></thead><tbody id="list-cats"></tbody></table></div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="color: var(--primary);"><i class="fas fa-list"></i> الخدمات المتوفرة</h3>
+                    <input type="text" id="search-srv" class="input-box" style="max-width: 250px;" placeholder="بحث عن خدمة..." onkeyup="window.filterTable('search-srv', 'table-services')">
                 </div>
+                <div class="table-wrap"><table id="table-services"><thead><tr><th>الترتيب</th><th>المزود</th><th>ID</th><th>الخدمة</th><th>السعر</th><th>القسم</th><th>إخفاء/إظهار</th><th>إجراءات</th></tr></thead><tbody id="list-srvs"></tbody></table></div>
             </div>
         </div>
 
@@ -235,12 +213,7 @@
                     <h3 style="color: var(--primary);"><i class="fas fa-receipt"></i> سجل الطلبات</h3>
                     <button onclick="window.loadOrders()" class="btn btn-outline" style="padding: 8px 15px;"><i class="fas fa-sync-alt"></i> تحديث القائمة</button>
                 </div>
-                <div class="table-wrap">
-                    <table>
-                        <thead><tr><th>رقم الطلب</th><th>المستخدم</th><th>الخدمة</th><th>الكمية</th><th>التكلفة</th><th>الحالة</th><th>استرجاع رصيد (Refund)</th></tr></thead>
-                        <tbody id="list-orders"></tbody>
-                    </table>
-                </div>
+                <div class="table-wrap"><table><thead><tr><th>رقم الطلب</th><th>المستخدم</th><th>الخدمة</th><th>الكمية</th><th>التكلفة</th><th>الحالة</th><th>استرجاع (Refund)</th></tr></thead><tbody id="list-orders"></tbody></table></div>
             </div>
         </div>
 
@@ -249,7 +222,7 @@
                 <h3 style="margin-bottom: 15px; color: var(--primary);"><i class="fas fa-magic"></i> توليد كوبونات</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; align-items: end;">
                     <div class="input-group" style="margin:0;"><label class="input-label">القيمة ($)</label><input type="number" id="gen-val" class="input-box" placeholder="مثال: 5"></div>
-                    <div class="input-group" style="margin:0;"><label class="input-label">كم مرة يمكن استخدامه؟</label><input type="number" id="gen-max-uses" class="input-box" value="1" placeholder="مثال: 50 للمسابقات"></div>
+                    <div class="input-group" style="margin:0;"><label class="input-label">مرات الاستخدام المسموحة</label><input type="number" id="gen-max-uses" class="input-box" value="1"></div>
                     <button onclick="window.generateCoupon()" class="btn btn-pro" style="height: 48px;"><i class="fas fa-cogs"></i> توليد</button>
                 </div>
             </div>
@@ -262,22 +235,25 @@
         <div id="sec-support" class="section">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                 <div class="card" style="padding: 0; overflow: hidden; height: 60vh; display: flex; flex-direction: column;">
-                    <div style="padding: 15px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.2);"><h3 style="color: var(--primary);">التذاكر المفتوحة</h3></div>
+                    <div style="padding: 15px; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.2);">
+                        <h3 style="color: var(--primary); margin-bottom: 10px;">التذاكر</h3>
+                        <div class="tabs">
+                            <button class="tab-btn active" onclick="window.switchTicketTab('open')" id="tab-open">مفتوحة</button>
+                            <button class="tab-btn" onclick="window.switchTicketTab('closed')" id="tab-closed">مغلقة (أرشيف)</button>
+                        </div>
+                    </div>
                     <div id="list-chats" style="overflow-y: auto; flex: 1;"></div>
                 </div>
                 <div class="card" style="padding: 0; display: flex; flex-direction: column; height: 60vh; overflow: hidden;">
                     <div style="padding: 15px; border-bottom: 1px solid var(--border); background: var(--bg-input); display: flex; justify-content: space-between; align-items: center;">
-                        <h3 id="chat-user-name" style="font-size: 1.1rem;">اختر محادثة</h3>
-                        <button id="btn-close-ticket" onclick="window.closeTicket()" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.8rem; display: none;"><i class="fas fa-times-circle"></i> إنهاء التذكرة</button>
+                        <h3 id="chat-user-name" style="font-size: 1.1rem;">اختر تذكرة</h3>
+                        <button id="btn-close-ticket" onclick="window.confirmAction('إغلاق التذكرة', 'هل تريد نقل هذه التذكرة للأرشيف؟', 'window.closeTicket()')" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.8rem; display: none;"><i class="fas fa-archive"></i> أرشفة</button>
                     </div>
                     <div id="admin-chat-feed" style="flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px;"></div>
-                    
                     <div id="admin-quick-replies" style="padding: 10px; border-top: 1px solid var(--border); display: none; gap: 8px; overflow-x: auto; white-space: nowrap;">
                         <button onclick="window.sendAdminMsg('مرحباً بك، جاري فحص المشكلة الآن.')" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.8rem;">جاري الفحص</button>
                         <button onclick="window.sendAdminMsg('تم حل المشكلة وتحديث حالة طلبك.')" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.8rem;">تم الحل</button>
-                        <button onclick="window.sendAdminMsg('تم استرجاع الرصيد لحسابك بنجاح.')" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.8rem;">تم الاسترجاع</button>
                     </div>
-
                     <div style="padding: 15px; border-top: 1px solid var(--border); background: var(--bg-input); display: flex; gap: 10px;">
                         <input type="text" id="admin-chat-input" class="input-box" style="margin: 0; background: var(--bg-main);" placeholder="اكتب ردك..." disabled>
                         <button id="admin-chat-btn" onclick="window.sendAdminMsg()" class="btn btn-pro" style="width: 60px; padding: 0;" disabled><i class="fas fa-paper-plane"></i></button>
@@ -288,75 +264,76 @@
 
         <div id="sec-noti" class="section">
             <div class="card" style="margin-bottom: 20px;">
-                <h3 style="color: var(--primary); margin-bottom: 15px;"><i class="fas fa-bullhorn"></i> إرسال إشعار للجميع</h3>
+                <h3 style="color: var(--primary); margin-bottom: 15px;"><i class="fas fa-bullhorn"></i> إرسال إشعار</h3>
                 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 15px; align-items: start;">
-                    <div class="input-group" style="margin:0;"><label class="input-label">عنوان الإشعار</label><input type="text" id="noti-title" class="input-box" placeholder="مثال: خصم جديد!"></div>
-                    <div class="input-group" style="margin:0;"><label class="input-label">التفاصيل</label><input type="text" id="noti-msg" class="input-box" placeholder="اكتب رسالتك هنا..."></div>
+                    <div class="input-group" style="margin:0;"><label class="input-label">العنوان</label><input type="text" id="noti-title" class="input-box"></div>
+                    <div class="input-group" style="margin:0;"><label class="input-label">التفاصيل</label><input type="text" id="noti-msg" class="input-box"></div>
                 </div>
-                <button onclick="window.sendNotification()" class="btn btn-pro" style="margin-top: 15px;"><i class="fas fa-paper-plane"></i> إرسال فوراً</button>
+                <button onclick="window.confirmAction('إرسال إشعار', 'هل أنت متأكد من إرسال هذا الإشعار لجميع المستخدمين؟', 'window.sendNotification()')" class="btn btn-pro" style="margin-top: 15px;"><i class="fas fa-paper-plane"></i> إرسال فوراً</button>
             </div>
             <div class="card">
-                <h3 style="margin-bottom: 15px;"><i class="fas fa-history"></i> الإشعارات السابقة</h3>
-                <div class="table-wrap"><table><thead><tr><th>العنوان</th><th>التفاصيل</th><th>المشاهدات (Views)</th><th>التاريخ</th><th>حذف</th></tr></thead><tbody id="list-notis"></tbody></table></div>
+                <div class="table-wrap"><table><thead><tr><th>العنوان</th><th>التفاصيل</th><th>التاريخ والوقت</th><th>المشاهدات</th><th>حذف</th></tr></thead><tbody id="list-notis"></tbody></table></div>
             </div>
         </div>
 
-    </div>
-
-    <div id="modal-provider" class="modal-overlay">
-        <div class="modal-content">
-            <i class="fas fa-times modal-close" onclick="window.closeModal('modal-provider')"></i>
-            <h3 class="modal-title">إضافة مزود (API)</h3>
-            <div class="input-group"><label class="input-label">اسم المزود (للتوضيح فقط)</label><input type="text" id="prov-name" class="input-box" placeholder="مثال: HQ Likes"></div>
-            <div class="input-group"><label class="input-label">رابط الـ API (URL)</label><input type="url" id="prov-url" class="input-box" placeholder="https://example.com/api/v2"></div>
-            <div class="input-group"><label class="input-label">المفتاح السري (API Key)</label><input type="text" id="prov-key" class="input-box" placeholder="أدخل المفتاح هنا"></div>
-            <button onclick="window.saveProvider()" class="btn btn-pro">حفظ المزود</button>
-        </div>
     </div>
 
     <div id="modal-import" class="modal-overlay">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 850px;">
             <i class="fas fa-times modal-close" onclick="window.closeModal('modal-import')"></i>
-            <h3 class="modal-title"><i class="fas fa-cloud-download-alt"></i> استيراد ذكي للخدمات</h3>
-            <p style="font-size: 0.85rem; color: var(--text-sec); margin-bottom: 15px;">سيقوم النظام بجلب جميع خدمات المزود وإضافتها للقسم المحدد تلقائياً مع حساب نسبة ربحك.</p>
-            <div class="input-group"><label class="input-label">اختر المزود</label><select id="imp-prov" class="input-box"></select></div>
-            <div class="input-group"><label class="input-label">إلى أي قسم تريد إضافتها؟</label><select id="imp-cat" class="input-box"></select></div>
-            <div class="input-group"><label class="input-label">نسبة الربح المضافة (%)</label><input type="number" id="imp-margin" class="input-box" value="30" placeholder="مثال: 30"></div>
-            <button onclick="window.runAutoImport()" class="btn btn-pro" style="background: var(--success);"><i class="fas fa-cogs"></i> بدء الاستيراد</button>
+            <h3 class="modal-title"><i class="fas fa-store"></i> متجر المزود (تصفح واستيراد)</h3>
+            
+            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                <div class="input-group" style="flex: 1;"><label class="input-label">اختر المزود</label><select id="imp-prov-select" class="input-box" onchange="window.fetchProviderServices()"></select></div>
+            </div>
+
+            <div id="imp-loader" style="display:none; text-align:center; padding: 30px;"><div class="spinner" style="margin:0 auto;"></div><p style="margin-top:10px; color:var(--text-sec);">جاري جلب بيانات متجر المزود...</p></div>
+
+            <div id="imp-step-1" style="display:none;">
+                <h4 style="margin-bottom: 10px; color: var(--primary);">1. اختر القسم من المزود للتصفح:</h4>
+                <div id="imp-provider-cats" style="display: flex; flex-wrap: wrap; gap: 10px; max-height: 200px; overflow-y: auto; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid var(--border);"></div>
+            </div>
+
+            <div id="imp-step-2" style="display:none; margin-top: 20px;">
+                <h4 style="margin-bottom: 10px; color: var(--primary); display: flex; justify-content: space-between; align-items: center;">
+                    <span>2. حدد الخدمات لتسعيرها واستيرادها:</span>
+                    <button class="btn btn-outline" style="padding: 5px 10px; font-size: 0.8rem;" onclick="window.backToCategories()"><i class="fas fa-arrow-right"></i> رجوع للأقسام</button>
+                </h4>
+                
+                <div style="display: flex; gap: 10px; align-items: end; background: var(--bg-input); padding: 15px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px;">
+                    <div class="input-group" style="margin:0; flex: 2;"><label class="input-label">إلى أي قسم محلي سيتم الإضافة؟</label><select id="imp-target-cat" class="input-box"></select></div>
+                    <div class="input-group" style="margin:0; flex: 1;"><label class="input-label">نسبة الربح التلقائية (%)</label><input type="number" id="imp-global-margin" class="input-box" value="30" onchange="window.applyGlobalMargin()"></div>
+                </div>
+
+                <div class="table-wrap" style="max-height: 300px; overflow-y: auto;">
+                    <table style="min-width: 800px;">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="imp-select-all" onchange="window.toggleAllImport(this)"></th>
+                                <th>ID</th>
+                                <th>اسم الخدمة</th>
+                                <th>تكلفة المزود</th>
+                                <th>سعر البيع (للتعديل)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="imp-services-table"></tbody>
+                    </table>
+                </div>
+                <button onclick="window.confirmAction('استيراد الخدمات', 'هل أنت متأكد من استيراد الخدمات المحددة بأسعارها الحالية؟', 'window.executeImport()')" class="btn btn-pro" style="margin-top: 15px; background: var(--success);"><i class="fas fa-download"></i> استيراد المحدد</button>
+            </div>
         </div>
     </div>
 
-    <div id="modal-cat" class="modal-overlay">
-        <div class="modal-content"><i class="fas fa-times modal-close" onclick="window.closeModal('modal-cat')"></i><h3 class="modal-title">إضافة قسم</h3><div class="input-group"><label class="input-label">اسم القسم</label><input type="text" id="cat-name" class="input-box"></div><button onclick="window.saveCat()" class="btn btn-pro">حفظ</button></div>
-    </div>
-
-    <div id="modal-srv" class="modal-overlay">
-        <div class="modal-content">
-            <i class="fas fa-times modal-close" onclick="window.closeModal('modal-srv')"></i>
-            <h3 class="modal-title">إضافة خدمة يدوياً</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="input-group"><label class="input-label">المزود التابع له</label><select id="srv-prov" class="input-box"></select></div>
-                <div class="input-group"><label class="input-label">القسم</label><select id="srv-cat" class="input-box"></select></div>
-            </div>
-            <div class="input-group"><label class="input-label">الاسم الظاهر للعميل</label><input type="text" id="srv-name" class="input-box"></div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="input-group"><label class="input-label">ID المزود الفعلي</label><input type="text" id="srv-pid" class="input-box"></div>
-                <div class="input-group"><label class="input-label">السعر ($)</label><input type="number" id="srv-price" class="input-box"></div>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div class="input-group"><label class="input-label">أقل كمية</label><input type="number" id="srv-min" class="input-box" value="10"></div>
-                <div class="input-group"><label class="input-label">أقصى كمية</label><input type="number" id="srv-max" class="input-box" value="100000"></div>
-            </div>
-            <button onclick="window.saveSrv()" class="btn btn-pro">حفظ الخدمة</button>
-        </div>
-    </div>
-
-    <div id="modal-balance" class="modal-overlay">
-        <div class="modal-content"><i class="fas fa-times modal-close" onclick="window.closeModal('modal-balance')"></i><h3 class="modal-title">تعديل الرصيد</h3><div style="text-align: center; margin-bottom: 20px;"><h4 id="bal-u-name" style="color: var(--text-sec); margin-bottom: 5px;">...</h4><div style="font-size: 2rem; font-weight: 900; color: var(--success); font-family: monospace;" id="bal-u-curr">0.00$</div></div><input type="hidden" id="bal-u-id"><div class="input-group"><label class="input-label">المبلغ (+ إضافة | - خصم)</label><input type="number" id="bal-amount" class="input-box" placeholder="مثال: 10 أو -5"></div><button onclick="window.updateBalance()" class="btn btn-pro">تحديث</button></div>
-    </div><script type="module">
+    <div id="modal-provider" class="modal-overlay"><div class="modal-content"><i class="fas fa-times modal-close" onclick="window.closeModal('modal-provider')"></i><h3 class="modal-title">إضافة مزود (API)</h3><div class="input-group"><label class="input-label">اسم المزود</label><input type="text" id="prov-name" class="input-box"></div><div class="input-group"><label class="input-label">الرابط (URL)</label><input type="url" id="prov-url" class="input-box" placeholder="https://example.com/api/v2"></div><div class="input-group"><label class="input-label">API Key</label><input type="text" id="prov-key" class="input-box"></div><button onclick="window.saveProvider()" class="btn btn-pro">حفظ المزود</button></div></div>
+    
+    <div id="modal-cat" class="modal-overlay"><div class="modal-content"><i class="fas fa-times modal-close" onclick="window.closeModal('modal-cat')"></i><h3 class="modal-title" id="cat-modal-title">إضافة/تعديل قسم</h3><input type="hidden" id="cat-edit-id"><div class="input-group"><label class="input-label">اسم القسم</label><input type="text" id="cat-name" class="input-box"></div><div class="input-group"><label class="input-label">رابط الصورة (اختياري)</label><input type="url" id="cat-image" class="input-box" placeholder="https://..."></div><div class="input-group"><label class="input-label">الترتيب (التسلسل)</label><input type="number" id="cat-seq" class="input-box" value="1"></div><button onclick="window.saveCat()" class="btn btn-pro">حفظ القسم</button></div></div>
+    
+    <div id="modal-srv" class="modal-overlay"><div class="modal-content"><i class="fas fa-times modal-close" onclick="window.closeModal('modal-srv')"></i><h3 class="modal-title" id="srv-modal-title">إضافة/تعديل خدمة</h3><input type="hidden" id="srv-edit-id"><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="input-group"><label class="input-label">المزود</label><select id="srv-prov" class="input-box"></select></div><div class="input-group"><label class="input-label">القسم المحلي</label><select id="srv-cat" class="input-box"></select></div></div><div class="input-group"><label class="input-label">الاسم الظاهر</label><input type="text" id="srv-name" class="input-box"></div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="input-group"><label class="input-label">ID المزود</label><input type="text" id="srv-pid" class="input-box"></div><div class="input-group"><label class="input-label">الترتيب (التسلسل)</label><input type="number" id="srv-seq" class="input-box" value="1"></div></div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="input-group"><label class="input-label">سعر الشراء (التكلفة)</label><input type="number" id="srv-cost" class="input-box"></div><div class="input-group"><label class="input-label">سعر البيع (للعميل)</label><input type="number" id="srv-price" class="input-box"></div></div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="input-group"><label class="input-label">أقل كمية</label><input type="number" id="srv-min" class="input-box" value="10"></div><div class="input-group"><label class="input-label">أقصى كمية</label><input type="number" id="srv-max" class="input-box" value="100000"></div></div><div class="input-group"><label class="input-label">الوصف</label><textarea id="srv-desc" class="input-box" style="height: 60px;"></textarea></div><button onclick="window.saveSrv()" class="btn btn-pro">حفظ الخدمة</button></div></div>
+    
+    <div id="modal-balance" class="modal-overlay"><div class="modal-content"><i class="fas fa-times modal-close" onclick="window.closeModal('modal-balance')"></i><h3 class="modal-title">تعديل الرصيد</h3><div style="text-align: center; margin-bottom: 20px;"><h4 id="bal-u-name" style="color: var(--text-sec);">...</h4><div style="font-size: 2rem; font-weight: 900; color: var(--success); font-family: monospace;" id="bal-u-curr">0.00$</div></div><input type="hidden" id="bal-u-id"><div class="input-group"><label class="input-label">المبلغ (+ إضافة | - خصم)</label><input type="number" id="bal-amount" class="input-box" placeholder="مثال: 10 أو -5"></div><button onclick="window.confirmAction('تعديل الرصيد', 'هل أنت متأكد من تغيير رصيد هذا المستخدم؟', 'window.updateBalance()')" class="btn btn-pro">تحديث الرصيد</button></div></div><script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, deleteDoc, query, where, orderBy, onSnapshot, serverTimestamp, writeBatch } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         const app = initializeApp({
             apiKey: "AIzaSyDPNS3dO05la3CpArNwm2KLHWaznog2rS4",
@@ -373,28 +350,37 @@
         let currentChatUser = null;
         let unsubscribeAdminChat = null;
         let providersList = [];
+        let localCategories = [];
+        let fetchedApiServices = []; 
+        let currentTicketTab = 'open';
 
-        // --- دوال مساعدة للواجهة ---
+        // --- 1. أدوات الواجهة والتنبيهات ---
         window.loader = (show) => document.getElementById('loader').style.display = show ? 'flex' : 'none';
         
         window.toast = (msg, type = 'info') => {
-            const t = document.getElementById('custom-toast');
-            const icon = document.getElementById('toast-icon');
+            const t = document.getElementById('custom-toast'); const icon = document.getElementById('toast-icon');
             document.getElementById('toast-msg').innerText = msg;
             let color = 'var(--info)'; let iconClass = 'fa-info-circle';
             if(type === 'success') { color = 'var(--success)'; iconClass = 'fa-check-circle'; }
             if(type === 'danger') { color = 'var(--danger)'; iconClass = 'fa-times-circle'; }
             if(type === 'warning') { color = 'var(--warning)'; iconClass = 'fa-exclamation-triangle'; }
-            t.style.borderLeft = `4px solid ${color}`;
-            icon.className = `fas ${iconClass} toast-icon`; icon.style.color = color;
+            t.style.borderLeft = `4px solid ${color}`; icon.className = `fas ${iconClass} toast-icon`; icon.style.color = color;
             t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000);
         };
 
-        window.toggleMobileMenu = () => {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('sidebar-overlay').classList.toggle('show');
+        window.openModal = (id) => document.getElementById(id).classList.add('open');
+        window.closeModal = (id) => document.getElementById(id).classList.remove('open');
+        
+        // نظام التأكيد الاحترافي (البديل لـ confirm)
+        window.confirmAction = (title, msg, callbackString) => {
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-msg').innerText = msg;
+            document.getElementById('btn-confirm-yes').setAttribute('onclick', `${callbackString}; window.closeModal('modal-confirm');`);
+            window.openModal('modal-confirm');
         };
 
+        window.toggleMobileMenu = () => { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebar-overlay').classList.toggle('show'); };
+        
         window.nav = (pageId) => {
             document.querySelectorAll('.section').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
@@ -402,259 +388,297 @@
             
             const tabMap = { 'dash':0, 'providers':1, 'users':2, 'services':3, 'orders':4, 'coupons':5, 'support':6, 'noti':7 };
             document.querySelectorAll('.nav-link')[tabMap[pageId]].classList.add('active');
-            
-            const titles = { 'dash':'نظرة عامة', 'providers':'مزودي الخدمات (API)', 'users':'إدارة المستخدمين', 'services':'الأقسام والخدمات', 'orders':'الطلبات والاسترجاع', 'coupons':'الكوبونات الذكية', 'support':'الدعم والتذاكر', 'noti':'مركز الإشعارات' };
+            const titles = { 'dash':'نظرة عامة', 'providers':'مزودي الخدمات', 'users':'المستخدمين', 'services':'الأقسام والخدمات', 'orders':'الطلبات', 'coupons':'الكوبونات', 'support':'الدعم الفني', 'noti':'الإشعارات' };
             document.getElementById('page-title-text').innerText = titles[pageId];
-
-            if(window.innerWidth <= 900) {
-                document.getElementById('sidebar').classList.remove('open');
-                document.getElementById('sidebar-overlay').classList.remove('show');
-            }
+            if(window.innerWidth <= 900) window.toggleMobileMenu();
         };
-
-        window.openModal = (id) => document.getElementById(id).classList.add('open');
-        window.closeModal = (id) => document.getElementById(id).classList.remove('open');
 
         window.filterTable = (inputId, tableId) => {
             const input = document.getElementById(inputId).value.toLowerCase();
             const rows = document.querySelectorAll(`#${tableId} tbody tr`);
             rows.forEach(row => { row.style.display = row.innerText.toLowerCase().includes(input) ? '' : 'none'; });
         };
+        window.copyToClip = (text) => { navigator.clipboard.writeText(text).then(() => window.toast("تم النسخ", "success")); };
 
-        window.copyToClip = (text) => {
-            navigator.clipboard.writeText(text).then(() => window.toast("تم نسخ الرمز بنجاح", "success"));
-        };
-
-        // --- المصادقة ---
+        // --- 2. المصادقة والتهيئة ---
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentAdmin = user;
-                document.getElementById('admin-auth').style.display = 'none';
-                window.initAdminPanel();
-            } else {
-                document.getElementById('admin-auth').style.display = 'flex';
-                document.getElementById('main-content').style.display = 'none';
-                document.getElementById('sidebar').style.display = 'none';
-            }
+            if (user) { currentAdmin = user; document.getElementById('admin-auth').style.display = 'none'; window.initAdminPanel(); } 
+            else { document.getElementById('admin-auth').style.display = 'flex'; document.getElementById('main-content').style.display = 'none'; document.getElementById('sidebar').style.display = 'none'; }
             window.loader(false);
         });
-
         window.adminLogin = async () => {
-            const e = document.getElementById('adm-email').value.trim();
-            const p = document.getElementById('adm-pass').value.trim();
-            if(!e || !p) return window.toast("يرجى إدخال بيانات الدخول", "warning");
-            window.loader(true);
-            try { await signInWithEmailAndPassword(auth, e, p); window.toast("تم تسجيل الدخول", "success"); } 
-            catch(err) { window.toast("بيانات غير صحيحة", "danger"); window.loader(false); }
+            const e = document.getElementById('adm-email').value.trim(); const p = document.getElementById('adm-pass').value.trim();
+            if(!e || !p) return window.toast("أدخل البيانات", "warning");
+            window.loader(true); try { await signInWithEmailAndPassword(auth, e, p); window.toast("مرحباً بك", "success"); } catch(err) { window.toast("بيانات غير صحيحة", "danger"); window.loader(false); }
         };
-
         window.adminLogout = async () => { window.loader(true); await signOut(auth); location.reload(); };
 
-        // --- تهيئة اللوحة ---
         window.initAdminPanel = () => {
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('sidebar').style.display = 'flex';
-            
-            loadDashboardStats(); listenToProviders(); listenToUsers();
-            loadCategoriesAndServices(); loadOrders(); loadCoupons();
-            listenToChats(); listenToNotis();
+            document.getElementById('main-content').style.display = 'block'; document.getElementById('sidebar').style.display = 'flex';
+            loadDashboardStats(); listenToProviders(); listenToUsers(); loadCategoriesAndServices(); loadOrders(); loadCoupons(); listenToChats(); listenToNotis();
         };
 
-        // --- 1. الإحصائيات (مبيعات وأرباح) ---
         const loadDashboardStats = () => {
-            onSnapshot(collection(db, "users"), (snap) => {
-                document.getElementById('count-users').innerText = snap.size;
-            });
+            onSnapshot(collection(db, "users"), (snap) => document.getElementById('count-users').innerText = snap.size);
             onSnapshot(collection(db, "orders"), (snap) => {
-                document.getElementById('count-orders').innerText = snap.size;
-                let totalSales = 0; let totalCost = 0;
-                snap.forEach(d => {
-                    const o = d.data();
-                    if(o.status !== 'Canceled' && o.status !== 'Refunded') {
-                        totalSales += (o.price || 0);
-                        totalCost += (o.originalCost || (o.price * 0.7)); // حساب تقريبي للتكلفة إذا لم تكن مخزنة
-                    }
-                });
-                document.getElementById('count-sales').innerText = totalSales.toFixed(2) + "$";
-                document.getElementById('count-profit').innerText = (totalSales - totalCost).toFixed(2) + "$";
+                document.getElementById('count-orders').innerText = snap.size; let sales = 0; let cost = 0;
+                snap.forEach(d => { const o = d.data(); if(!['Canceled', 'Fail', 'Refunded'].includes(o.status)) { sales += (o.price||0); cost += (o.originalCost||(o.price*0.7)); } });
+                document.getElementById('count-sales').innerText = sales.toFixed(2) + "$"; document.getElementById('count-profit').innerText = (sales - cost).toFixed(2) + "$";
             });
         };
 
-        // --- 2. إدارة المزودين (API) ---
+        // --- 3. المزودين ---
         const listenToProviders = () => {
             onSnapshot(collection(db, "providers"), async (snap) => {
-                const list = document.getElementById('list-providers');
-                const srvProv = document.getElementById('srv-prov');
-                const impProv = document.getElementById('imp-prov');
-                list.innerHTML = ''; srvProv.innerHTML = ''; impProv.innerHTML = '';
-                providersList = [];
-
+                const list = document.getElementById('list-providers'); const srvProv = document.getElementById('srv-prov'); const impProv = document.getElementById('imp-prov-select');
+                list.innerHTML = ''; srvProv.innerHTML = ''; impProv.innerHTML = '<option value="" disabled selected>اختر المزود...</option>'; providersList = [];
                 for(let d of snap.docs) {
-                    const p = d.data(); p.id = d.id;
-                    providersList.push(p);
-                    srvProv.innerHTML += `<option value="${p.id}">${p.name}</option>`;
-                    impProv.innerHTML += `<option value="${p.id}">${p.name}</option>`;
+                    const p = d.data(); p.id = d.id; providersList.push(p);
+                    srvProv.innerHTML += `<option value="${p.id}">${p.name}</option>`; impProv.innerHTML += `<option value="${p.id}">${p.name}</option>`;
+                    list.innerHTML += `<tr><td style="font-weight:bold; color:var(--primary);">${p.name}</td><td style="font-family:monospace; font-size:0.8rem;">${p.url}</td><td id="prov-bal-${p.id}">جاري الفحص...</td><td id="prov-ord-${p.id}">-</td><td><button onclick="window.confirmAction('حذف مزود', 'هل أنت متأكد من الحذف؟', 'window.deleteDBItem(\\'providers\\', \\'${p.id}\\')')" class="btn btn-danger" style="padding:5px 10px;"><i class="fas fa-trash"></i></button></td></tr>`;
                     
-                    let balanceStr = "جاري الفحص...";
-                    list.innerHTML += `<tr id="prov-row-${p.id}"><td style="font-weight:bold; color:var(--primary);">${p.name}</td><td style="font-family:monospace; font-size:0.8rem;">${p.url}</td><td id="prov-bal-${p.id}" style="font-weight:bold;">${balanceStr}</td><td><button onclick="window.deleteItem('providers', '${p.id}')" class="btn btn-danger" style="padding:5px 10px;"><i class="fas fa-trash"></i></button></td></tr>`;
-                    
-                    // جلب الرصيد الفعلي من المزود
                     try {
                         let apiUrl = p.url.trim(); if(!apiUrl.startsWith('http')) apiUrl = 'https://' + apiUrl;
-                        const proxyUrl = `https://corsproxy.io/?` + encodeURIComponent(`${apiUrl}?key=${p.key}&action=balance`);
-                        const res = await fetch(proxyUrl); const apiData = await res.json();
-                        if(apiData.balance) document.getElementById(`prov-bal-${p.id}`).innerHTML = `<span style="color:var(--success);">${apiData.balance} ${apiData.currency || '$'}</span>`;
-                        else document.getElementById(`prov-bal-${p.id}`).innerHTML = `<span style="color:var(--danger);">خطأ في الربط</span>`;
+                        const res = await fetch(`https://corsproxy.io/?` + encodeURIComponent(`${apiUrl}?key=${p.key}&action=balance`)); const apiData = await res.json();
+                        document.getElementById(`prov-bal-${p.id}`).innerHTML = apiData.balance ? `<span style="color:var(--success); font-weight:bold;">${apiData.balance} ${apiData.currency||'$'}</span>` : `<span style="color:var(--danger);">خطأ ربط</span>`;
                     } catch(e) { document.getElementById(`prov-bal-${p.id}`).innerHTML = `<span style="color:var(--danger);">خطأ اتصال</span>`; }
                 }
             });
         };
-
         window.saveProvider = async () => {
-            const name = document.getElementById('prov-name').value.trim();
-            const url = document.getElementById('prov-url').value.trim();
-            const key = document.getElementById('prov-key').value.trim();
-            if(!name || !url || !key) return window.toast("أكمل جميع الحقول", "warning");
-            
-            window.loader(true);
-            try {
-                await addDoc(collection(db, "providers"), { name: name, url: url, key: key, createdAt: serverTimestamp() });
-                window.toast("تم ربط المزود بنجاح", "success");
-                window.closeModal('modal-provider');
-            } catch(e) { window.toast("حدث خطأ", "danger"); }
-            window.loader(false);
+            const name = document.getElementById('prov-name').value.trim(); const url = document.getElementById('prov-url').value.trim(); const key = document.getElementById('prov-key').value.trim();
+            if(!name || !url || !key) return window.toast("أكمل الحقول", "warning");
+            window.loader(true); try { await addDoc(collection(db, "providers"), { name, url, key, createdAt: serverTimestamp() }); window.toast("تمت الإضافة", "success"); window.closeModal('modal-provider'); } catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
         };
 
-        // --- 3. إدارة المستخدمين ونظام الحظر ---
+        // --- 4. المستخدمين ---
         const listenToUsers = () => {
             onSnapshot(query(collection(db, "users"), orderBy("createdAt", "desc")), (snap) => {
                 const list = document.getElementById('list-users'); list.innerHTML = '';
                 snap.forEach(d => {
                     const u = d.data();
-                    const banBtn = u.banned ? `<button onclick="window.toggleBan('${d.id}', false)" class="btn btn-outline" style="color:var(--success); border-color:var(--success); padding:5px 10px;"><i class="fas fa-unlock"></i> فك الحظر</button>` 
-                                            : `<button onclick="window.toggleBan('${d.id}', true)" class="btn btn-danger" style="padding:5px 10px;"><i class="fas fa-ban"></i> حظر</button>`;
-                    const status = u.banned ? '<span class="badge bg-fail">محظور</span>' : '<span class="badge bg-ok">نشط</span>';
-                    
-                    list.innerHTML += `<tr><td style="font-weight:bold;">${u.name}<br><small style="color:var(--text-sec);">@${u.username || 'user'}</small></td><td style="color:var(--success); font-weight:bold; font-family:monospace;">${u.balance.toFixed(4)}$</td><td style="font-family:monospace;">${(u.spent || 0).toFixed(4)}$</td><td>${status}</td><td><button onclick="window.openBalanceModal('${d.id}', '${u.name}', ${u.balance})" class="btn btn-outline" style="padding: 5px 10px;"><i class="fas fa-wallet"></i> تعديل</button></td><td>${banBtn}</td></tr>`;
+                    const banBtn = u.banned ? `<button onclick="window.confirmAction('فك الحظر', 'تأكيد فك الحظر؟', 'window.toggleBan(\\'${d.id}\\', false)')" class="btn btn-outline" style="color:var(--success); border-color:var(--success); padding:5px 10px;"><i class="fas fa-unlock"></i> فك</button>` : `<button onclick="window.confirmAction('حظر مستخدم', 'هل أنت متأكد من حظر المستخدم؟', 'window.toggleBan(\\'${d.id}\\', true)')" class="btn btn-danger" style="padding:5px 10px;"><i class="fas fa-ban"></i> حظر</button>`;
+                    list.innerHTML += `<tr><td style="font-weight:bold;">${u.name}<br><small style="color:var(--text-sec);">@${u.username||'user'}</small></td><td style="color:var(--success); font-weight:bold; font-family:monospace;">${u.balance.toFixed(4)}$</td><td style="font-family:monospace;">${(u.spent||0).toFixed(4)}$</td><td>${u.banned?'<span class="badge bg-fail">محظور</span>':'<span class="badge bg-ok">نشط</span>'}</td><td><button onclick="window.openBalanceModal('${d.id}', '${u.name}', ${u.balance})" class="btn btn-outline" style="padding: 5px 10px;"><i class="fas fa-wallet"></i> تعديل</button></td><td>${banBtn}</td></tr>`;
                 });
             });
         };
-
-        window.toggleBan = async (id, banStatus) => {
-            if(!confirm(banStatus ? "هل أنت متأكد من حظر هذا المستخدم؟" : "هل تريد فك الحظر عن هذا المستخدم؟")) return;
-            window.loader(true);
-            try { await updateDoc(doc(db, "users", id), { banned: banStatus }); window.toast("تم التحديث بنجاح", "success"); } 
-            catch(e) { window.toast("حدث خطأ", "danger"); }
-            window.loader(false);
-        };
-
-        window.openBalanceModal = (id, name, currentBal) => {
-            document.getElementById('bal-u-id').value = id; document.getElementById('bal-u-name').innerText = name;
-            document.getElementById('bal-u-curr').innerText = currentBal.toFixed(4) + "$"; document.getElementById('bal-amount').value = '';
-            window.openModal('modal-balance');
-        };
-
+        window.toggleBan = async (id, status) => { window.loader(true); try { await updateDoc(doc(db, "users", id), { banned: status }); window.toast("تم التحديث", "success"); } catch(e) { window.toast("خطأ", "danger"); } window.loader(false); };
+        window.openBalanceModal = (id, name, bal) => { document.getElementById('bal-u-id').value=id; document.getElementById('bal-u-name').innerText=name; document.getElementById('bal-u-curr').innerText=bal.toFixed(4)+"$"; document.getElementById('bal-amount').value=''; window.openModal('modal-balance'); };
         window.updateBalance = async () => {
             const id = document.getElementById('bal-u-id').value; const amount = parseFloat(document.getElementById('bal-amount').value);
-            if(!amount || isNaN(amount)) return window.toast("أدخل مبلغ صحيح", "warning");
-            window.loader(true);
-            try {
-                const userRef = doc(db, "users", id); const userSnap = await getDoc(userRef);
-                const newBal = userSnap.data().balance + amount;
-                await updateDoc(userRef, { balance: newBal < 0 ? 0 : newBal });
-                window.toast("تم التحديث", "success"); window.closeModal('modal-balance');
-            } catch(e) { window.toast("حدث خطأ", "danger"); }
-            window.loader(false);
+            if(!amount || isNaN(amount)) return window.toast("مبلغ غير صحيح", "warning");
+            window.loader(true); try { const ref = doc(db, "users", id); const snap = await getDoc(ref); const newBal = snap.data().balance + amount; await updateDoc(ref, { balance: newBal<0?0:newBal }); window.toast("تم التحديث", "success"); window.closeModal('modal-balance'); } catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
         };
 
-        // --- 4. الأقسام والاستيراد الذكي ---
+        // --- 5. الأقسام والخدمات الشاملة ---
+        window.toggleVisibility = async (col, id, currentStatus) => { try { await updateDoc(doc(db, col, id), { visible: !currentStatus }); window.toast("تم تغيير الحالة", "success"); } catch(e) { window.toast("خطأ", "danger"); } };
+        
         const loadCategoriesAndServices = () => {
-            onSnapshot(collection(db, "categories"), (snap) => {
-                const list = document.getElementById('list-cats'); const srvCat = document.getElementById('srv-cat'); const impCat = document.getElementById('imp-cat');
-                list.innerHTML = ''; srvCat.innerHTML = ''; impCat.innerHTML = '';
+            onSnapshot(query(collection(db, "categories"), orderBy("seq", "asc")), (snap) => {
+                const list = document.getElementById('list-cats'); const srvCat = document.getElementById('srv-cat'); const impCat = document.getElementById('imp-target-cat');
+                list.innerHTML = ''; srvCat.innerHTML = ''; impCat.innerHTML = ''; localCategories = [];
                 snap.forEach(d => {
-                    const c = d.data();
-                    if(c.visible !== false) {
-                        srvCat.innerHTML += `<option value="${d.id}">${c.name}</option>`; impCat.innerHTML += `<option value="${d.id}">${c.name}</option>`;
-                        list.innerHTML += `<tr><td style="font-weight:bold;">${c.name}</td><td><span class="badge bg-ok">مفعل</span></td><td><button onclick="window.deleteItem('categories', '${d.id}')" class="btn btn-danger" style="padding: 5px 10px;"><i class="fas fa-trash"></i></button></td></tr>`;
-                    }
+                    const c = d.data(); c.id = d.id; localCategories.push(c);
+                    srvCat.innerHTML += `<option value="${c.id}">${c.name}</option>`; impCat.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+                    const img = c.image || 'https://e.top4top.io/p_3675vatut1.jpg';
+                    const isChecked = c.visible !== false ? 'checked' : '';
+                    
+                    list.innerHTML += `<tr><td style="font-weight:bold;">${c.seq||0}</td><td><img src="${img}" style="width:35px; height:35px; border-radius:8px; object-fit:cover;"></td><td style="font-weight:bold;">${c.name}</td>
+                    <td><label class="switch"><input type="checkbox" ${isChecked} onchange="window.toggleVisibility('categories', '${c.id}', ${c.visible !== false})"><span class="slider"></span></label></td>
+                    <td><button onclick="window.openCatModal('${c.id}', '${c.name.replace(/'/g, "\\'")}', '${c.image||''}', ${c.seq||0})" class="btn btn-outline" style="padding:5px; margin-left:5px;"><i class="fas fa-edit"></i></button>
+                    <button onclick="window.confirmAction('حذف جذري', 'تحذير: سيتم حذف القسم وجميع الخدمات الموجودة داخله! هل توافق؟', 'window.deleteCategoryAndServices(\\'${c.id}\\')')" class="btn btn-danger" style="padding:5px;"><i class="fas fa-trash"></i></button></td></tr>`;
                 });
             });
 
-            onSnapshot(collection(db, "services"), async (snap) => {
-                const list = document.getElementById('list-srvs'); list.innerHTML = ''; let seq = 1;
-                for(let d of snap.docs) {
+            onSnapshot(query(collection(db, "services"), orderBy("seq", "asc")), (snap) => {
+                const list = document.getElementById('list-srvs'); list.innerHTML = '';
+                snap.forEach(d => {
                     const s = d.data();
-                    if(s.visible !== false) {
-                        let catName = "غير محدد"; try { const catSnap = await getDoc(doc(db, "categories", s.categoryId)); if(catSnap.exists()) catName = catSnap.data().name; } catch(e){}
-                        let provName = providersList.find(p => p.id === s.providerId)?.name || "غير معروف";
-                        list.innerHTML += `<tr><td style="font-weight:bold; color:var(--primary);">الخدمة #${seq++}</td><td style="font-size:0.85rem;">${provName}</td><td style="font-family:monospace; color:var(--text-sec);">#${s.providerServiceId}</td><td style="font-weight:bold; white-space:normal; min-width:200px;">${s.name}</td><td style="color:var(--success); font-weight:bold;">${s.price}$</td><td>${catName}</td><td><button onclick="window.deleteItem('services', '${d.id}')" class="btn btn-danger" style="padding: 5px 10px;"><i class="fas fa-trash"></i></button></td></tr>`;
-                    }
-                }
+                    let catName = localCategories.find(c => c.id === s.categoryId)?.name || "غير محدد";
+                    let provName = providersList.find(p => p.id === s.providerId)?.name || "غير معروف";
+                    const isChecked = s.visible !== false ? 'checked' : '';
+                    const objStr = encodeURIComponent(JSON.stringify({id: d.id, ...s}));
+                    
+                    list.innerHTML += `<tr><td style="font-weight:bold; color:var(--primary);">${s.seq||0}</td><td style="font-size:0.8rem;">${provName}</td><td style="font-family:monospace; color:var(--text-sec);">#${s.providerServiceId}</td><td style="font-weight:bold; white-space:normal; min-width:200px;">${s.name}</td><td style="color:var(--success); font-weight:bold;">${s.price}$</td><td style="font-size:0.85rem;">${catName}</td>
+                    <td><label class="switch"><input type="checkbox" ${isChecked} onchange="window.toggleVisibility('services', '${d.id}', ${s.visible !== false})"><span class="slider"></span></label></td>
+                    <td><button onclick="window.openSrvModal('${objStr}')" class="btn btn-outline" style="padding:5px; margin-left:5px;"><i class="fas fa-edit"></i></button>
+                    <button onclick="window.confirmAction('حذف خدمة', 'هل تريد حذف هذه الخدمة؟', 'window.deleteDBItem(\\'services\\', \\'${d.id}\\')')" class="btn btn-danger" style="padding:5px;"><i class="fas fa-trash"></i></button></td></tr>`;
+                });
             });
+        };
+
+        window.openCatModal = (id = '', name = '', img = '', seq = 1) => {
+            document.getElementById('cat-modal-title').innerText = id ? 'تعديل قسم' : 'إضافة قسم';
+            document.getElementById('cat-edit-id').value = id; document.getElementById('cat-name').value = name;
+            document.getElementById('cat-image').value = img; document.getElementById('cat-seq').value = seq;
+            window.openModal('modal-cat');
         };
 
         window.saveCat = async () => {
-            const name = document.getElementById('cat-name').value.trim(); if(!name) return window.toast("أدخل الاسم", "warning");
-            window.loader(true); try { await addDoc(collection(db, "categories"), { name: name, visible: true, createdAt: serverTimestamp() }); window.toast("تمت الإضافة", "success"); document.getElementById('cat-name').value = ''; window.closeModal('modal-cat'); } catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
+            const id = document.getElementById('cat-edit-id').value; const name = document.getElementById('cat-name').value.trim();
+            const img = document.getElementById('cat-image').value.trim(); const seq = parseInt(document.getElementById('cat-seq').value) || 0;
+            if(!name) return window.toast("أدخل الاسم", "warning");
+            window.loader(true);
+            try {
+                const data = { name, image: img, seq, visible: true, updatedAt: serverTimestamp() };
+                if(id) await updateDoc(doc(db, "categories", id), data);
+                else { data.createdAt = serverTimestamp(); await addDoc(collection(db, "categories"), data); }
+                window.toast("تم الحفظ بنجاح", "success"); window.closeModal('modal-cat');
+            } catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
+        };
+
+        window.deleteCategoryAndServices = async (catId) => {
+            window.loader(true);
+            try {
+                const q = query(collection(db, "services"), where("categoryId", "==", catId));
+                const snap = await getDocs(q);
+                const batch = writeBatch(db);
+                snap.forEach(d => { batch.delete(doc(db, "services", d.id)); }); // حذف كل الخدمات التابعة
+                batch.delete(doc(db, "categories", catId)); // حذف القسم
+                await batch.commit();
+                window.toast("تم حذف القسم وخدماته بالكامل", "success");
+            } catch(e) { window.toast("خطأ في الحذف", "danger"); }
+            window.loader(false);
+        };
+
+        window.openSrvModal = (encodedObj = '') => {
+            if(encodedObj) {
+                const s = JSON.parse(decodeURIComponent(encodedObj));
+                document.getElementById('srv-modal-title').innerText = 'تعديل خدمة';
+                document.getElementById('srv-edit-id').value = s.id; document.getElementById('srv-prov').value = s.providerId;
+                document.getElementById('srv-cat').value = s.categoryId; document.getElementById('srv-name').value = s.name;
+                document.getElementById('srv-pid').value = s.providerServiceId; document.getElementById('srv-seq').value = s.seq || 0;
+                document.getElementById('srv-cost').value = s.originalCost || s.price; document.getElementById('srv-price').value = s.price;
+                document.getElementById('srv-min').value = s.min; document.getElementById('srv-max').value = s.max;
+                document.getElementById('srv-desc').value = s.description || '';
+            } else {
+                document.getElementById('srv-modal-title').innerText = 'إضافة خدمة جديدة';
+                document.getElementById('srv-edit-id').value = ''; document.getElementById('srv-name').value = '';
+                document.getElementById('srv-pid').value = ''; document.getElementById('srv-seq').value = '1';
+                document.getElementById('srv-cost').value = ''; document.getElementById('srv-price').value = '';
+                document.getElementById('srv-desc').value = '';
+            }
+            window.openModal('modal-srv');
         };
 
         window.saveSrv = async () => {
-            const provId = document.getElementById('srv-prov').value; const catId = document.getElementById('srv-cat').value;
-            const name = document.getElementById('srv-name').value.trim(); const pid = document.getElementById('srv-pid').value.trim();
-            const price = parseFloat(document.getElementById('srv-price').value); const min = parseInt(document.getElementById('srv-min').value); const max = parseInt(document.getElementById('srv-max').value);
-            if(!provId || !catId || !name || !pid || isNaN(price)) return window.toast("أكمل الحقول الأساسية", "warning");
-
+            const id = document.getElementById('srv-edit-id').value;
+            const data = {
+                providerId: document.getElementById('srv-prov').value, categoryId: document.getElementById('srv-cat').value,
+                name: document.getElementById('srv-name').value.trim(), providerServiceId: document.getElementById('srv-pid').value.trim(),
+                seq: parseInt(document.getElementById('srv-seq').value) || 0,
+                originalCost: parseFloat(document.getElementById('srv-cost').value), price: parseFloat(document.getElementById('srv-price').value),
+                min: parseInt(document.getElementById('srv-min').value), max: parseInt(document.getElementById('srv-max').value),
+                description: document.getElementById('srv-desc').value.trim(), updatedAt: serverTimestamp()
+            };
+            if(!data.name || !data.providerServiceId || isNaN(data.price)) return window.toast("أكمل الحقول الأساسية", "warning");
+            
             window.loader(true);
             try {
-                await addDoc(collection(db, "services"), { categoryId: catId, providerId: provId, name: name, providerServiceId: pid, price: price, originalCost: price * 0.7, min: min, max: max, description: "", visible: true, createdAt: serverTimestamp() });
-                window.toast("تم إضافة الخدمة", "success"); window.closeModal('modal-srv');
-            } catch(e) { window.toast("خطأ", "danger"); }
-            window.loader(false);
+                if(id) await updateDoc(doc(db, "services", id), data);
+                else { data.visible = true; data.createdAt = serverTimestamp(); await addDoc(collection(db, "services"), data); }
+                window.toast("تم الحفظ", "success"); window.closeModal('modal-srv');
+            } catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
         };
 
-        // دالة الاستيراد الذكي
-        window.runAutoImport = async () => {
-            const provId = document.getElementById('imp-prov').value;
-            const catId = document.getElementById('imp-cat').value;
-            const margin = parseFloat(document.getElementById('imp-margin').value) || 0;
-            if(!provId || !catId) return window.toast("اختر المزود والقسم", "warning");
+        window.deleteDBItem = async (col, id) => { window.loader(true); try { await deleteDoc(doc(db, col, id)); window.toast("تم الحذف النهائي", "success"); } catch(e) { window.toast("خطأ", "danger"); } window.loader(false); };
 
-            const prov = providersList.find(p => p.id === provId);
-            if(!prov) return window.toast("المزود غير موجود", "danger");
+        // --- 6. متجر الاستيراد الذكي (Advanced Import) ---
+        window.openAdvancedImport = () => {
+            document.getElementById('imp-step-1').style.display = 'none'; document.getElementById('imp-step-2').style.display = 'none';
+            document.getElementById('imp-loader').style.display = 'none'; document.getElementById('imp-prov-select').value = '';
+            window.openModal('modal-import');
+        };
 
-            window.loader(true);
+        window.fetchProviderServices = async () => {
+            const provId = document.getElementById('imp-prov-select').value;
+            const prov = providersList.find(p => p.id === provId); if(!prov) return;
+            
+            document.getElementById('imp-step-1').style.display = 'none'; document.getElementById('imp-step-2').style.display = 'none';
+            document.getElementById('imp-loader').style.display = 'block'; fetchedApiServices = [];
+            
             try {
                 let apiUrl = prov.url.trim(); if(!apiUrl.startsWith('http')) apiUrl = 'https://' + apiUrl;
-                const proxyUrl = `https://corsproxy.io/?` + encodeURIComponent(`${apiUrl}?key=${prov.key}&action=services`);
-                const res = await fetch(proxyUrl); const services = await res.json();
+                const res = await fetch(`https://corsproxy.io/?` + encodeURIComponent(`${apiUrl}?key=${prov.key}&action=services`));
+                fetchedApiServices = await res.json();
                 
-                if(!Array.isArray(services)) throw new Error("استجابة المزود غير صالحة");
+                if(!Array.isArray(fetchedApiServices)) throw new Error("استجابة خاطئة");
+                
+                // استخراج الأقسام من المزود
+                const apiCategories = [...new Set(fetchedApiServices.map(s => s.category))];
+                const catContainer = document.getElementById('imp-provider-cats'); catContainer.innerHTML = '';
+                
+                apiCategories.forEach(cat => {
+                    catContainer.innerHTML += `<button class="btn btn-outline" style="padding: 8px 15px; font-size: 0.85rem; border-color: var(--primary); color: var(--primary); white-space: nowrap;" onclick="window.loadProviderCategory('${cat.replace(/'/g, "\\'")}')">${cat}</button>`;
+                });
+                
+                document.getElementById('imp-loader').style.display = 'none';
+                document.getElementById('imp-step-1').style.display = 'block';
+            } catch(e) { document.getElementById('imp-loader').style.display = 'none'; window.toast("خطأ في الاتصال بالمزود", "danger"); }
+        };
 
-                let importedCount = 0;
-                for(const s of services) {
-                    const originalCost = parseFloat(s.rate);
-                    const sellingPrice = parseFloat((originalCost + (originalCost * (margin / 100))).toFixed(4));
+        window.loadProviderCategory = (catName) => {
+            document.getElementById('imp-step-1').style.display = 'none'; document.getElementById('imp-step-2').style.display = 'block';
+            const table = document.getElementById('imp-services-table'); table.innerHTML = '';
+            document.getElementById('imp-select-all').checked = false;
+            
+            const services = fetchedApiServices.filter(s => s.category === catName);
+            const margin = parseFloat(document.getElementById('imp-global-margin').value) || 0;
+            
+            services.forEach((s, idx) => {
+                const cost = parseFloat(s.rate); const price = (cost + (cost * (margin / 100))).toFixed(4);
+                table.innerHTML += `<tr>
+                    <td><input type="checkbox" class="imp-checkbox" data-idx="${idx}" data-service='${JSON.stringify(s).replace(/'/g, "&apos;")}'></td>
+                    <td style="font-family:monospace; color:var(--text-sec);">#${s.service}</td>
+                    <td style="white-space:normal; font-size:0.85rem;">${s.name}</td>
+                    <td style="color:var(--danger); font-family:monospace;">${cost}$</td>
+                    <td><input type="number" id="imp-price-${idx}" class="input-box" style="padding: 5px; width: 80px; text-align: center;" value="${price}"></td>
+                </tr>`;
+            });
+        };
+
+        window.backToCategories = () => { document.getElementById('imp-step-2').style.display = 'none'; document.getElementById('imp-step-1').style.display = 'block'; };
+        
+        window.applyGlobalMargin = () => {
+            const margin = parseFloat(document.getElementById('imp-global-margin').value) || 0;
+            document.querySelectorAll('.imp-checkbox').forEach(cb => {
+                const s = JSON.parse(cb.getAttribute('data-service').replace(/&apos;/g, "'"));
+                const cost = parseFloat(s.rate); const price = (cost + (cost * (margin / 100))).toFixed(4);
+                document.getElementById(`imp-price-${cb.getAttribute('data-idx')}`).value = price;
+            });
+        };
+
+        window.toggleAllImport = (el) => { document.querySelectorAll('.imp-checkbox').forEach(cb => cb.checked = el.checked); };
+
+        window.executeImport = async () => {
+            const provId = document.getElementById('imp-prov-select').value;
+            const catId = document.getElementById('imp-target-cat').value;
+            if(!catId) return window.toast("اختر القسم المحلي أولاً", "warning");
+
+            const selected = document.querySelectorAll('.imp-checkbox:checked');
+            if(selected.length === 0) return window.toast("لم تقم بتحديد أي خدمة!", "warning");
+
+            window.loader(true);
+            try {
+                const batch = writeBatch(db);
+                let count = 0;
+                selected.forEach(cb => {
+                    const idx = cb.getAttribute('data-idx');
+                    const s = JSON.parse(cb.getAttribute('data-service').replace(/&apos;/g, "'"));
+                    const finalPrice = parseFloat(document.getElementById(`imp-price-${idx}`).value);
+                    const cost = parseFloat(s.rate);
                     
-                    await addDoc(collection(db, "services"), {
-                        categoryId: catId, providerId: provId, name: s.name, providerServiceId: s.service,
-                        price: sellingPrice, originalCost: originalCost, min: parseInt(s.min), max: parseInt(s.max), description: s.desc || "",
-                        visible: true, createdAt: serverTimestamp()
-                    });
-                    importedCount++;
-                }
-                window.toast(`تم استيراد ${importedCount} خدمة بنجاح!`, "success");
-                window.closeModal('modal-import');
-            } catch(e) { window.toast("حدث خطأ أثناء الاتصال بالمزود", "danger"); console.error(e); }
+                    const newDocRef = doc(collection(db, "services"));
+                    batch.set(newDocRef, { categoryId: catId, providerId: provId, name: s.name, providerServiceId: s.service, seq: count+1, price: finalPrice, originalCost: cost, min: parseInt(s.min), max: parseInt(s.max), description: s.desc || "", visible: true, createdAt: serverTimestamp() });
+                    count++;
+                });
+                await batch.commit();
+                window.toast(`تم استيراد ${count} خدمة بنجاح!`, "success"); window.closeModal('modal-import');
+            } catch(e) { window.toast("خطأ أثناء الاستيراد", "danger"); console.error(e); }
             window.loader(false);
         };
 
-        window.deleteItem = async (col, id) => {
-            if(!confirm("تأكيد الحذف؟")) return; window.loader(true);
-            try { await updateDoc(doc(db, col, id), { visible: false }); window.toast("تم الحذف", "success"); } catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
-        };
-
-        // --- 5. الطلبات والاسترجاع الذكي (Refund) ---
+        // --- 7. الطلبات والاسترجاع ---
         window.loadOrders = () => {
             window.loader(true);
             onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), async (snap) => {
@@ -666,84 +690,77 @@
 
                     let userName = "مجهول"; try { const uSnap = await getDoc(doc(db, "users", o.userId)); if(uSnap.exists()) userName = uSnap.data().name; } catch(e){}
 
-                    // زر الاسترجاع يظهر فقط إذا كان الطلب ملغي ولم يتم استرجاعه مسبقاً
                     let refundBtn = "-";
                     if((s.includes('cancel') || s.includes('fail')) && !s.includes('refunded')) {
-                        refundBtn = `<button onclick="window.processRefund('${d.id}', '${o.userId}', ${o.price})" class="btn btn-outline" style="color:var(--warning); border-color:var(--warning); padding:5px 10px; font-size:0.8rem;"><i class="fas fa-undo"></i> استرجاع الرصيد</button>`;
-                    } else if (s.includes('refunded')) { refundBtn = `<span style="color:var(--text-sec); font-size:0.8rem;"><i class="fas fa-check"></i> تم الاسترجاع</span>`; }
+                        refundBtn = `<button onclick="window.confirmAction('استرجاع الرصيد', 'هل أنت متأكد من رد ${o.price}$ للمستخدم؟', 'window.processRefund(\\'${d.id}\\', \\'${o.userId}\\', ${o.price})')" class="btn btn-outline" style="color:var(--warning); border-color:var(--warning); padding:5px 10px; font-size:0.8rem;"><i class="fas fa-undo"></i> استرجاع</button>`;
+                    } else if (s.includes('refunded')) { refundBtn = `<span style="color:var(--text-sec); font-size:0.8rem;"><i class="fas fa-check"></i> مسترجع</span>`; }
 
-                    list.innerHTML += `<tr><td style="font-family:monospace; font-weight:bold;">#${o.providerOrderId}</td><td>${userName}</td><td style="max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${o.service}</td><td style="font-family:monospace;">${o.qty}</td><td style="color:var(--success); font-weight:bold;">${o.price}$</td><td><span class="badge ${statusClass}">${o.status}</span></td><td>${refundBtn}</td></tr>`;
+                    list.innerHTML += `<tr><td style="font-family:monospace; font-weight:bold;">#${o.providerOrderId}</td><td>${userName}</td><td style="max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.85rem;">${o.service}</td><td style="font-family:monospace;">${o.qty}</td><td style="color:var(--success); font-weight:bold;">${o.price}$</td><td><span class="badge ${statusClass}">${o.status}</span></td><td>${refundBtn}</td></tr>`;
                 }
                 window.loader(false);
             });
         };
 
         window.processRefund = async (orderId, userId, amount) => {
-            if(!confirm("هل أنت متأكد من استرجاع رصيد هذا الطلب للمستخدم؟")) return;
             window.loader(true);
             try {
                 const userRef = doc(db, "users", userId); const userSnap = await getDoc(userRef);
-                const newBal = userSnap.data().balance + amount;
-                await updateDoc(userRef, { balance: newBal });
+                await updateDoc(userRef, { balance: userSnap.data().balance + amount });
                 await updateDoc(doc(db, "orders", orderId), { status: 'Refunded' });
-                await addDoc(collection(db, "deposits"), { userId: userId, amount: amount, method: 'استرجاع طلب (Refund)', date: serverTimestamp() });
-                window.toast("تم إرجاع الرصيد للمستخدم بنجاح", "success");
-            } catch(e) { window.toast("حدث خطأ", "danger"); }
-            window.loader(false);
+                await addDoc(collection(db, "deposits"), { userId: userId, amount: amount, method: 'استرجاع طلب', date: serverTimestamp() });
+                window.toast("تم استرجاع الرصيد", "success");
+            } catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
         };
 
-        // --- 6. الكوبونات متعددة الاستخدام ---
-        const generateRandomCode = (length = 8) => {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; let res = 'KF-'; for (let i=0; i<length; i++) res+=chars.charAt(Math.floor(Math.random()*chars.length)); return res;
-        };
-
+        // --- 8. الكوبونات ---
         window.generateCoupon = async () => {
-            const val = parseFloat(document.getElementById('gen-val').value);
-            const maxUses = parseInt(document.getElementById('gen-max-uses').value) || 1;
-            if(!val || val <= 0) return window.toast("أدخل قيمة صحيحة", "warning");
-
-            window.loader(true);
-            try {
-                await addDoc(collection(db, "coupons"), { code: generateRandomCode(), value: val, maxUses: maxUses, currentUses: 0, active: true, createdAt: serverTimestamp() });
-                window.toast(`تم توليد الكوبون بنجاح`, "success");
-                document.getElementById('gen-val').value = ''; document.getElementById('gen-max-uses').value = '1';
-            } catch(e) { window.toast("حدث خطأ", "danger"); }
-            window.loader(false);
+            const val = parseFloat(document.getElementById('gen-val').value); const maxUses = parseInt(document.getElementById('gen-max-uses').value) || 1;
+            if(!val || val <= 0) return window.toast("قيمة غير صحيحة", "warning");
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; let code = 'KF-'; for (let i=0; i<8; i++) code+=chars.charAt(Math.floor(Math.random()*chars.length));
+            window.loader(true); try { await addDoc(collection(db, "coupons"), { code, value: val, maxUses, currentUses: 0, active: true, createdAt: serverTimestamp() }); window.toast("تم التوليد", "success"); document.getElementById('gen-val').value=''; } catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
         };
-
         const loadCoupons = () => {
             onSnapshot(query(collection(db, "coupons"), orderBy("createdAt", "desc")), (snap) => {
                 const list = document.getElementById('list-coupons'); list.innerHTML = '';
                 snap.forEach(d => {
-                    const c = d.data();
-                    const status = (c.currentUses >= c.maxUses) ? '<span class="badge bg-fail">مكتمل</span>' : '<span class="badge bg-ok">فعال</span>';
+                    const c = d.data(); const status = (c.currentUses >= c.maxUses) ? '<span class="badge bg-fail">مكتمل</span>' : '<span class="badge bg-ok">فعال</span>';
                     list.innerHTML += `<tr><td style="font-family:monospace; font-weight:bold; color:var(--primary);">${c.code}</td><td style="color:var(--success); font-weight:bold;">${c.value}$</td><td style="font-family:monospace;">${c.currentUses} / ${c.maxUses}</td><td>${status}</td><td><i class="fas fa-copy" style="cursor:pointer; color:var(--text-sec);" onclick="window.copyToClip('${c.code}')"></i></td></tr>`;
                 });
             });
         };
 
-        // --- 7. الدعم الفني وإغلاق التذاكر ---
+        // --- 9. الدعم الفني المطور ---
+        window.switchTicketTab = (tab) => {
+            currentTicketTab = tab;
+            document.getElementById('tab-open').classList.remove('active'); document.getElementById('tab-closed').classList.remove('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            listenToChats(); // إعادة تحميل التذاكر حسب التبويب
+        };
+
         const listenToChats = () => {
             onSnapshot(query(collection(db, "chats"), orderBy("time", "desc")), (snap) => {
                 const list = document.getElementById('list-chats'); list.innerHTML = '';
                 snap.forEach(d => {
                     const c = d.data();
-                    if(c.status === 'closed') return; // إخفاء التذاكر المغلقة
+                    const isClosed = c.status === 'closed';
+                    if((currentTicketTab === 'open' && isClosed) || (currentTicketTab === 'closed' && !isClosed)) return;
+                    
                     const isUnread = c.hasUnread ? '<div style="width:10px; height:10px; background:var(--danger); border-radius:50%; box-shadow:0 0 5px var(--danger);"></div>' : '';
-                    list.innerHTML += `<div style="padding: 15px; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="window.openChat('${c.userId}', '${c.name}')"><div><b style="display:block; font-size:0.95rem;">${c.name}</b><span style="font-size:0.75rem; color:var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; display: inline-block;">${c.lastMessage}</span></div>${isUnread}</div>`;
+                    list.innerHTML += `<div style="padding: 15px; border-bottom: 1px solid var(--border); cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="window.openChat('${c.userId}', '${c.name}', '${c.status}')"><div><b style="display:block; font-size:0.95rem;">${c.name}</b><span style="font-size:0.75rem; color:var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; display: inline-block;">${c.lastMessage}</span></div>${isUnread}</div>`;
                 });
             });
         };
 
-        window.openChat = async (userId, userName) => {
+        window.openChat = async (userId, userName, status) => {
             currentChatUser = userId;
             document.getElementById('chat-user-name').innerText = "التذكرة: " + userName;
-            document.getElementById('admin-chat-input').disabled = false;
-            document.getElementById('admin-chat-btn').disabled = false;
-            document.getElementById('btn-close-ticket').style.display = 'block';
-            document.getElementById('admin-quick-replies').style.display = 'flex';
+            const isOpen = status !== 'closed';
             
-            await updateDoc(doc(db, "chats", userId), { hasUnread: false });
+            document.getElementById('admin-chat-input').disabled = !isOpen; document.getElementById('admin-chat-btn').disabled = !isOpen;
+            document.getElementById('btn-close-ticket').style.display = isOpen ? 'block' : 'none';
+            document.getElementById('admin-quick-replies').style.display = isOpen ? 'flex' : 'none';
+            
+            if(isOpen) await updateDoc(doc(db, "chats", userId), { hasUnread: false });
             if(unsubscribeAdminChat) unsubscribeAdminChat();
             
             unsubscribeAdminChat = onSnapshot(query(collection(db, "chats", userId, "messages"), orderBy("createdAt", "asc")), (snap) => {
@@ -754,56 +771,37 @@
                 });
                 feed.scrollTop = feed.scrollHeight;
             });
+            if(window.innerWidth <= 900 && document.getElementById('sidebar').classList.contains('open')) window.toggleMobileMenu();
         };
 
         window.sendAdminMsg = async (quickMsg = null) => {
             if(!currentChatUser) return;
-            const input = document.getElementById('admin-chat-input');
-            const txt = quickMsg || input.value.trim();
-            if(!txt) return;
-            
+            const input = document.getElementById('admin-chat-input'); const txt = quickMsg || input.value.trim(); if(!txt) return;
             input.value = '';
             await addDoc(collection(db, "chats", currentChatUser, "messages"), { text: txt, sender: 'admin', createdAt: serverTimestamp() });
             await updateDoc(doc(db, "chats", currentChatUser), { lastMessage: "أنت: " + txt, time: serverTimestamp(), status: 'open' });
         };
 
         window.closeTicket = async () => {
-            if(!currentChatUser) return;
-            if(!confirm("هل تريد إغلاق هذه التذكرة وإخفاءها من القائمة؟")) return;
-            window.loader(true);
-            try {
-                await updateDoc(doc(db, "chats", currentChatUser), { status: 'closed' });
-                document.getElementById('admin-chat-feed').innerHTML = '<div style="text-align:center; color:var(--text-sec); margin-top:50px;">تم إغلاق التذكرة</div>';
-                document.getElementById('btn-close-ticket').style.display = 'none';
-                document.getElementById('admin-quick-replies').style.display = 'none';
-                currentChatUser = null;
-                window.toast("تم إنهاء التذكرة", "success");
-            } catch(e) { window.toast("حدث خطأ", "danger"); }
-            window.loader(false);
+            if(!currentChatUser) return; window.loader(true);
+            try { await updateDoc(doc(db, "chats", currentChatUser), { status: 'closed' }); window.toast("تم نقل التذكرة للأرشيف", "success"); currentChatUser = null; document.getElementById('admin-chat-feed').innerHTML = ''; document.getElementById('btn-close-ticket').style.display='none'; document.getElementById('admin-quick-replies').style.display='none'; } 
+            catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
         };
 
-        // --- 8. الإشعارات وتتبع المشاهدات ---
+        // --- 10. الإشعارات (مع تواريخ ومشاهدات) ---
         window.sendNotification = async () => {
-            const title = document.getElementById('noti-title').value.trim();
-            const msg = document.getElementById('noti-msg').value.trim();
-            if(!title || !msg) return window.toast("أكمل حقول الإشعار", "warning");
-
-            window.loader(true);
-            try {
-                await addDoc(collection(db, "notifications"), { title: title, message: msg, views: 0, createdAt: serverTimestamp() });
-                window.toast("تم إرسال الإشعار لجميع المستخدمين", "success");
-                document.getElementById('noti-title').value = ''; document.getElementById('noti-msg').value = '';
-            } catch(e) { window.toast("حدث خطأ", "danger"); }
-            window.loader(false);
+            const title = document.getElementById('noti-title').value.trim(); const msg = document.getElementById('noti-msg').value.trim();
+            if(!title || !msg) return window.toast("أكمل الحقول", "warning");
+            window.loader(true); try { await addDoc(collection(db, "notifications"), { title, message: msg, views: 0, createdAt: serverTimestamp() }); window.toast("تم الإرسال للجميع", "success"); document.getElementById('noti-title').value=''; document.getElementById('noti-msg').value=''; } catch(e) { window.toast("خطأ", "danger"); } window.loader(false);
         };
-
         const listenToNotis = () => {
             onSnapshot(query(collection(db, "notifications"), orderBy("createdAt", "desc")), (snap) => {
                 const list = document.getElementById('list-notis'); list.innerHTML = '';
                 snap.forEach(d => {
                     const n = d.data();
-                    const dateStr = n.createdAt ? new Date(n.createdAt.seconds * 1000).toLocaleDateString('ar-EG') : '-';
-                    list.innerHTML += `<tr><td style="font-weight:bold; color:var(--primary);">${n.title}</td><td style="font-size:0.85rem; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${n.message}</td><td><span class="badge bg-info"><i class="fas fa-eye"></i> ${n.views || 0}</span></td><td style="font-size:0.8rem; color:var(--text-sec);">${dateStr}</td><td><button onclick="window.deleteItem('notifications', '${d.id}')" class="btn btn-danger" style="padding: 5px 10px;"><i class="fas fa-trash"></i></button></td></tr>`;
+                    const dateObj = n.createdAt ? new Date(n.createdAt.seconds * 1000) : new Date();
+                    const dateStr = dateObj.toLocaleDateString('ar-EG') + " " + dateObj.toLocaleTimeString('ar-EG', {hour: '2-digit', minute:'2-digit'});
+                    list.innerHTML += `<tr><td style="font-weight:bold; color:var(--primary);">${n.title}</td><td style="font-size:0.85rem; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${n.message}</td><td style="font-family:monospace; font-size:0.8rem; color:var(--text-sec);">${dateStr}</td><td><span class="badge bg-info"><i class="fas fa-eye"></i> ${n.views || 0}</span></td><td><button onclick="window.confirmAction('حذف إشعار', 'هل تريد مسح هذا الإشعار؟', 'window.deleteDBItem(\\'notifications\\', \\'${d.id}\\')')" class="btn btn-danger" style="padding: 5px 10px;"><i class="fas fa-trash"></i></button></td></tr>`;
                 });
             });
         };
